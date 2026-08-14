@@ -1,0 +1,22 @@
+{
+  "name": "qa-automation-portfolio",
+  "version": "1.0.0",
+  "description": "Repo for save my own tests or project.",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jarg03/qa-automation-portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jarg03/qa-automation-portfolio/issues"
+  },
+  "homepage": "https://github.com/jarg03/qa-automation-portfolio#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.2.0"
+  }
+}
