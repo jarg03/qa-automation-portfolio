@@ -1,0 +1,42 @@
+
+//  Variables y arrow functions
+const testUser = { email: 'email@mail.com', password: 'psw' };
+const esMayorDeEdad = (edad) => edad >= 18;
+
+//  Arrays, objetos y destructuring
+const productos = [
+  { nombre: 'Laptop', precio: 899 },
+  { nombre: 'Mouse', precio: 15 },
+  { nombre: 'Monitor', precio: 250 }
+];
+const filtroCien = productos.filter((producto) => producto.precio > 100);
+const nombres = productos.map((producto) => producto.nombre);
+
+const response = { status: 200, body: { userId: 45, email: 'test@shopflow.com' } };
+const { status } = response;
+const { body: { userId, email } } = response;
+
+//  async/await
+const obtenerUsuario = async () => {
+  const response = await fetch('https://shopflow-api.com/users/1');
+  const data = await response.json();
+  return data;
+};
+
+const crearProducto = async () => {
+  try {
+    const response = await fetch('https://shopflow-api.com/products');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log('Error al crear producto:', error);
+  }
+};
+
+//  JSON y módulos
+const usuario = { nombre: 'Alexis', rol: 'tester' };
+const texto = JSON.stringify(usuario);
+
+const textoJSON = '{"id": 10, "activo": true}';
+const usuarioParseado = JSON.parse(textoJSON);
+console.log(usuarioParseado.activo);
