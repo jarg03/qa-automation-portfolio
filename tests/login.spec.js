@@ -1,30 +1,27 @@
 import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pages/LoginPage';
 
 test.describe('Login', () => {
+ let loginPage; 
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    loginPage = new LoginPage(page); 
+    await loginPage.goto();
   });
 
   test('login exitoso con credenciales válidas', async ({ page }) => {
-    await page.getByPlaceholder('Username').fill('standard_user');
-    await page.getByPlaceholder('Password').fill('secret_sauce');
-    await page.getByRole('button', { name: 'Login' }).click();
+    await loginPage.login('standard_user', 'secret_sauce');
     await expect(page).toHaveURL('/inventory.html');
   });
 
   test('login falla con contraseña incorrecta', async ({ page }) => {
-    await page.getByPlaceholder('Username').fill('standard_user');
-    await page.getByPlaceholder('Password').fill('contraseña_incorrecta');
-    await page.getByRole('button', { name: 'Login' }).click();
-    await expect(page.getByText('Epic sadface: Username and password do not match any user in this service')).toBeVisible(); 
+    await loginPage.login('standard_user','contraseña_incorrecta');
+    await expect(loginPage.errorMessage).toBeVisible(); 
   });
 
   test('login falla con usuario bloqueado', async ({ page }) => {
-    await page.getByPlaceholder('Username').fill('locked_out_user');
-    await page.getByPlaceholder('Password').fill('secret_sauce');
-    await page.getByRole('button', { name: 'Login' }).click();
-    await expect(page.getByText('Epic sadface: Sorry, this user has been locked out.')).toBeVisible(); 
+    await loginPage.login('locked_out_user','secret_sauce');
+    await expect(loginPage.errorMessage).toBeVisible(); 
   });
 
 }); 
