@@ -9,19 +9,35 @@ test.describe('Login', () => {
     await loginPage.goto();
   });
 
-  test('login exitoso con credenciales válidas', async ({ page }) => {
+  test('Successful login', async ({ page }) => {
     await loginPage.login('standard_user', 'secret_sauce');
     await expect(page).toHaveURL('/inventory.html');
   });
 
-  test('login falla con contraseña incorrecta', async ({ page }) => {
-    await loginPage.login('standard_user','contraseña_incorrecta');
-    await expect(loginPage.errorMessage).toBeVisible(); 
+const casosInvalidos = [
+{
+     description: 'Wrong password',
+     username: 'standard_user',
+     password: 'contraseña_incorrecta',
+     errorMessage: 'Epic sadface: Username and password do not match any user in this service'
+
+}, 
+{
+  description: 'Blocked user',
+  username: 'locked_out_user',
+  password: 'secret_sauce',
+  errorMessage: 'Epic sadface: Sorry, this user has been locked out.'
+
+}
+];
+
+casosInvalidos.forEach(({description, username, password, errorMessage}) => {
+  test(`Login fails with ${description}`, async ({ page }) => {
+  await loginPage.login(username, password);
+  await expect(page.getByText(errorMessage)).toBeVisible();
   });
 
-  test('login falla con usuario bloqueado', async ({ page }) => {
-    await loginPage.login('locked_out_user','secret_sauce');
-    await expect(loginPage.errorMessage).toBeVisible(); 
-  });
 
-}); 
+  });
+});
+
