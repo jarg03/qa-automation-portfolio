@@ -10,7 +10,7 @@ test.describe('Login', () => {
   });
 
   test('Successful login', async ({ page }) => {
-    await loginPage.login('standard_user', 'secret_sauce');
+    await loginPage.login(process.env.TEST_USERNAME, process.env.TEST_PASSWORD);
     await expect(page).toHaveURL('/inventory.html');
   });
 
