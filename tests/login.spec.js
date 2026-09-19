@@ -9,7 +9,7 @@ test.describe('Login', () => {
     await loginPage.goto();
   });
 
-  test('Successful login', async ({ page }) => {
+  test('Successful login @smoke', async ({ page }) => {
     await loginPage.login(process.env.TEST_USERNAME, process.env.TEST_PASSWORD);
     await expect(page).toHaveURL('/inventory.html');
   });
@@ -32,7 +32,7 @@ const casosInvalidos = [
 ];
 
 casosInvalidos.forEach(({description, username, password, errorMessage}) => {
-  test(`Login fails with ${description}`, async ({ page }) => {
+  test(`Login fails with ${description} @regression`, async ({ page }) => {
   await loginPage.login(username, password);
   await expect(page.getByText(errorMessage)).toBeVisible();
   });
